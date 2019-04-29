@@ -30,6 +30,9 @@ Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+" Completor is an asynchronous code completion framework for vim8
+Plug 'maralla/completor.vim'
+
 " Initialize plugin system
 call plug#end()
 
