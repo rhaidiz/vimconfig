@@ -6,7 +6,7 @@
 	url = https://github.com/wincent/command-t.git
 [submodule "plugged/completor.vim"]
 	path = plugged/completor.vim
-	url = https://github.com/maralla/completor.git
+	url = https://github.com/maralla/completor.vim.git
 [submodule "plugged/ctrlp.vim"]
 	path = plugged/ctrlp.vim
 	url = https://github.com/ctrlpvim/ctrlp.vim.git
