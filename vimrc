@@ -82,7 +82,7 @@ if(!has('nvim'))
 		set encoding=utf8
 endif
 set list
-set listchars=tab:▸\ ,trail:¬
+set listchars=tab:__,trail:¬
 
 "syntax
 syntax on
@@ -95,7 +95,7 @@ colorscheme iceberg
 hi CursorLine gui=underline
 hi Visual guibg=#3d415d
 " makes the special charactes a bit brigther
-hi SpecialKey guifg=#989DB4
+hi SpecialKey guifg=#3F4152
 hi SpellBad guifg=#E27878
 
 " re-read a file if changed
