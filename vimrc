@@ -33,9 +33,14 @@ Plug 'vim-airline/vim-airline-themes'
 " Completor is an asynchronous code completion framework for vim8
 Plug 'maralla/completor.vim'
 
+Plug 'fatih/vim-go'
+
 " Initialize plugin system
 call plug#end()
 
+set guifont=Menlo:h12
+
+"set rubydll=/usr/local/Cellar/ruby/2.6.3/lib/libruby.2.6.dylib
 
 " tuning
 set nofoldenable 
