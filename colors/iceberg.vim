@@ -28,7 +28,7 @@ let g:colors_name = 'iceberg'
 
 hi! ColorColumn cterm=NONE ctermbg=235 guibg=#1e2132
 hi! CursorColumn cterm=NONE ctermbg=235 guibg=#1e2132
-hi! CursorLine cterm=NONE ctermbg=235 guibg=#1e2132
+hi! CursorLine cterm=NONE ctermbg=235 guibg=#3C405B
 hi! Comment ctermfg=242 guifg=#6b7089
 hi! Constant ctermfg=140 guifg=#a093c7
 hi! Cursor ctermbg=252 ctermfg=234 guibg=#c6c8d1 guifg=#161821
@@ -78,7 +78,8 @@ hi! TabLineSel cterm=NONE ctermbg=234 ctermfg=252 gui=NONE guibg=#161821 guifg=#
 hi! Title ctermfg=216 gui=NONE guifg=#e2a478
 hi! Todo ctermbg=234 ctermfg=150 guibg=#161821 guifg=#d8e599
 hi! Type ctermfg=109 gui=NONE guifg=#89b8c2
-hi! Underlined cterm=underline ctermfg=110 gui=underline guifg=#84a0c6 term=underline
+hi! Underlined ctermfg=110 guifg=#84a0c6
+"hi! Underlined cterm=underline ctermfg=110 gui=underline guifg=#84a0c6 term=underline
 hi! VertSplit ctermbg=233 ctermfg=233 guibg=#0f1117 guifg=#0f1117
 hi! Visual ctermbg=236 guibg=#272c42
 hi! WildMenu ctermbg=255 ctermfg=234 guibg=#d4d5db guifg=#17171b
