@@ -34,3 +34,6 @@
 [submodule "plugged/vim-snipmate"]
 	path = plugged/vim-snipmate
 	url = https://github.com/garbas/vim-snipmate.git
+[submodule "tomasiser/vim-code-dark"]
+	path = tomasiser/vim-code-dark
+	url = https://github.com/tomasiser/vim-code-dark.git

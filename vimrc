@@ -35,6 +35,10 @@ Plug 'maralla/completor.vim'
 
 Plug 'fatih/vim-go'
 
+" vim visual studio theme
+Plug 'tomasiser/vim-code-dark'
+
+
 " Initialize plugin system
 call plug#end()
 
@@ -66,7 +70,7 @@ set noshowmode
 set hlsearch
 set colorcolumn=80
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="bubblegum"
+let g:airline_theme="codedark"
 
 
 " use mouse
@@ -95,7 +99,7 @@ syntax on
 " used to turn on 24bit colors in neovim
 set termguicolors
 "colorscheme solarized
-colorscheme iceberg
+colorscheme codedark
 " set an underline line in gui
 hi CursorLine gui=underline
 hi Visual guibg=#3d415d
