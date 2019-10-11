@@ -38,6 +38,7 @@ Plug 'fatih/vim-go'
 " vim visual studio theme
 Plug 'tomasiser/vim-code-dark'
 
+Plug 'gabesoft/vim-ags'
 
 " Initialize plugin system
 call plug#end()
