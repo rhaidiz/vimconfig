@@ -25,6 +25,7 @@ Plug 'misterade/LaTeX-Box'
 
 " nerdtree
 Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " airline
 Plug 'bling/vim-airline'
@@ -205,3 +206,9 @@ function! Set_latex()
 endfunction
 " }}}
 let g:completor_python_binary = '/usr/local/bin/python3'
+
+
+" A better NERTree setup
+autocmd BufWinEnter * NERDTreeMirror
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeMinimalUI = 1
