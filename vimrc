@@ -27,7 +27,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tomasiser/vim-code-dark'
  
 Plug 'gabesoft/vim-ags'
-Plug 'govim/govim'
+"Plug 'govim/govim'
 
 " Initialize plugin system
 call plug#end()
@@ -155,6 +155,9 @@ function! XTermPasteBegin()
   set paste
   return ""
 endfunction
+
+set wildignore+=moc.*,moc_*
+let NERDTreeRespectWildIgnore=1
   
 "  " LatexBox {{{
 "  
@@ -226,31 +229,31 @@ endif
 " NERDTree
 " sync open file with NERDTree
 " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
- function! SyncTree()
-   if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-     NERDTreeFind
-     wincmd p
-   endif
-endfunction
+" function! IsNERDTreeOpen()        
+"    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
 " 
-autocmd VimEnter * call OpenNERDTree()
-let NERDTreeMinimalUI=1
+" " Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" " file, and we're not in vimdiff
+"  function! SyncTree()
+"    if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+"      NERDTreeFind
+"      wincmd p
+"    endif
+" endfunction
+" " 
+" autocmd VimEnter * call OpenNERDTree()
+" let NERDTreeMinimalUI=1
+" 
+" function! OpenNERDTree()
+" 	NERDTree
+" 	wincmd p
+" endfunction
 
-function! OpenNERDTree()
-	NERDTree
-	wincmd p
-endfunction
-
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " " Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
+"autocmd BufEnter * call SyncTree()
 "    " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
