@@ -32,7 +32,7 @@ Plug 'gabesoft/vim-ags'
 " Initialize plugin system
 call plug#end()
 
-set guifont=Hack\ Nerd\ Font
+set guifont=Hack\ Nerd\ Font:h13
 
 "set rubydll=/usr/local/Cellar/ruby/2.6.3/lib/libruby.2.6.dylib
 
@@ -90,7 +90,7 @@ set termguicolors
 colorscheme codedark
 " set an underline line in gui
 hi CursorLine gui=underline
-hi Visual guibg=#3d415d
+" hi Visual guibg=#3d415
 " makes the special charactes a bit brigther
 hi SpecialKey guifg=#3F4152
 hi SpellBad guifg=#E27878
@@ -275,3 +275,13 @@ call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'NONE')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
 call NERDTreeHighlightFile('go', 'lightblue', 'none', '#338ab3', 'NONE')
+
+
+" Search for the word under cursor
+nnoremap <Leader>s :Ags<Space><C-R>=expand('<cword>')<CR><CR>
+" Search for the visually selected text
+vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR>
+" Run Ags
+nnoremap <Leader>a :Ags<Space>
+" Quit Ags
+nnoremap <Leader><Leader>a :AgsQuit<CR>
