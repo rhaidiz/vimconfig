@@ -201,3 +201,6 @@ vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR
 nnoremap <Leader>a :Ags<Space>
 " Quit Ags
 nnoremap <Leader><Leader>a :AgsQuit<CR>
+
+" Remove annoying bell sound from MacVim
+autocmd! GUIEnter * set vb t_vb=
