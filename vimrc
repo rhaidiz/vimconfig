@@ -31,6 +31,8 @@ Plug 'gabesoft/vim-ags'
 " Go
 Plug 'govim/govim'
 
+"
+Plug 'vimwiki/vimwiki'
 
 " Initialize plugin system
 call plug#end()
@@ -204,3 +206,6 @@ nnoremap <Leader><Leader>a :AgsQuit<CR>
 
 " Remove annoying bell sound from MacVim
 autocmd! GUIEnter * set vb t_vb=
+
+" Mark .md file as vimwiki file
+let g:vimwiki_ext2syntax = {'.md':'markdown'}
