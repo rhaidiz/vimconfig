@@ -209,3 +209,6 @@ autocmd! GUIEnter * set vb t_vb=
 
 " Mark .md file as vimwiki file
 let g:vimwiki_ext2syntax = {'.md':'markdown'}
+
+nnoremap ' :bp<CR><CR>
+nnoremap ì :bn<CR><CR>
