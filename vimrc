@@ -11,9 +11,6 @@ Plug 'https://github.com/airblade/vim-gitgutter.git'
  
 Plug 'ctrlpvim/ctrlp.vim'
  
-" latex
-Plug 'misterade/LaTeX-Box'
- 
 " nerdtree
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -26,12 +23,13 @@ Plug 'vim-airline/vim-airline-themes'
 " dracula theme
 Plug 'https://github.com/dracula/vim.git'
 
+" Silver searcher
 Plug 'gabesoft/vim-ags'
 
 " Go
 Plug 'govim/govim'
 
-"
+" vimwiki
 Plug 'vimwiki/vimwiki'
 
 " Initialize plugin system
