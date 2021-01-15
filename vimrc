@@ -146,9 +146,6 @@ function! XTermPasteBegin()
   return ""
 endfunction
 
-set wildignore+=moc.*,moc_*
-let NERDTreeRespectWildIgnore=1
-
 " To get hover working in the terminal we need to set ttymouse. See
 "
 " :help ttymouse
@@ -184,6 +181,10 @@ if has("patch-8.1.1904")
   set completepopup=align:menu,border:off,highlight:Pmenu
 endif
 
+autocmd BufRead,BufNewFile *.wiki setlocal nolist
+
+" NerdTree stuff
+let NERDTreeRespectWildIgnore=1
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
@@ -207,20 +208,6 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
 call NERDTreeHighlightFile('go', 'lightblue', 'none', '#338ab3', 'NONE')
 
 
-" Search for the word under cursor
-nnoremap <Leader>s :Ags<Space><C-R>=expand('<cword>')<CR><CR>
-" Search for the visually selected text
-vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR>
-" Run Ags
-nnoremap <Leader>a :Ags<Space>
-" Quit Ags
-nnoremap <Leader><Leader>a :AgsQuit<CR>
-
 " Remove annoying bell sound from MacVim
 autocmd! GUIEnter * set vb t_vb=
 
-" Mark .md file as vimwiki file
-let g:vimwiki_ext2syntax = {'.md':'markdown'}
-
-nnoremap ' :bp<CR><CR>
-nnoremap ì :bn<CR><CR>
