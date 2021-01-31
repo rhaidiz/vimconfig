@@ -1,3 +1,5 @@
+" ============ PLUGINs ============
+" {{{
 " vim-plugged
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -29,132 +31,82 @@ Plug 'gabesoft/vim-ags'
 " Go
 Plug 'govim/govim'
 
-" vimwiki
-Plug 'vimwiki/vimwiki'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 
 " Initialize plugin system
 call plug#end()
-
-
-" tuning
-set nofoldenable 
-"set esckeys
-set backspace=indent,eol,start
-set nostartofline
-set wildmenu
-set ruler
-" show statusbar always
-set laststatus=2
-set incsearch
-
-" performance boost
-set lazyredraw
-set ttyfast
- 
-" " show\hide some stuff to video
-set number
-set cursorline
-set showcmd
-set hlsearch
-set colorcolumn=80
-let g:airline#extensions#tabline#enabled = 1
-"let g:airline_theme="simple"
- 
- 
-" use mouse
-set mouse=a
-" 
-" formatting
-set smarttab
-set autoindent
-set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set wrap
-set ffs=unix,dos,mac
- 
-" used to turn on 24bit colors in neovim
-set termguicolors
-
-" syntax
-syntax enable
-colorscheme dracula 
-set guifont=Hack\ Nerd\ Font:h13
-
-" Shoe special characters
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-set list
-
-" re-read a file if changed
-set autoread
-
-" disable .swp backups
-set nobackup
-set nowritebackup
-set noswapfile
-
-
-" Leaders {{{
-let mapleader = "-"
-let maplocalleader = "."
-" }}}
-" 
-" Mapping {{{
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
-nnoremap <C-h> <C-W><C-H>
-inoremap <c-u> <esc>viwUea
-nnoremap <c-c> :NERDTreeToggle<CR>
-nnoremap <c-a> viw
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-inoremap jk <esc>
-inoremap <esc> <nop>
-nnoremap <Up> <nop>
-nnoremap <Left> <nop>
-nnoremap <Right> <nop>
-nnoremap <Down> <nop>
-nnoremap <leader>s :set hls!<cr>
-inoremap <leader>p <C-r>"
-
-" Silver searcher mappings
-" Search for the word under cursor
-nnoremap <Leader>s :Ags<Space><C-R>=expand('<cword>')<CR><CR>
-" Search for the visually selected text
-vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR>
-" Run Ags
-nnoremap <Leader>a :Ags<Space>
-" Quit Ags
-nnoremap <Leader><Leader>a :AgsQuit<CR>
-
-" Move around buffers
-nnoremap ' :bp<CR><CR>
-nnoremap ì :bn<CR><CR>
 " }}}
 
-"
-" Trick for avoiding toggle paste mode
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-" 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('omni_patterns', {
+\ 'go': '[^. *\t]\.\w*',
+\})
+" <TAB>: completion.
+function! s:check_back_space() abort 
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#manual_complete()
+" }}}
 
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
+" Settings {{{
+set scrolloff=7 " Lines to keep above and below curso
+set backspace=indent,eol,start " don't remember
+set wildmenu " Wim command completition expanded
+set laststatus=2 " always show status bar
+set incsearch " while searching show the mattern that matches so far
+set number " show line numbers
+set cursorline " highlight the cursor line
+set showcmd " show cmd in last line
+set hlsearch " highlight search
+set colorcolumn=80 " set column to 80 chars
+let g:airline#extensions#tabline#enabled = 1 " enable airline
+set mouse=a " enable mouse support in case I'm lazy
+set autoindent " autoindent based on current line
+set expandtab " spaces for tabs
+set tabstop=2 " number of spaces for a tab
+set shiftwidth=2 " indentation when using << >> and ==
+set wrap " wrap lines
+set ffs=unix,dos,mac " EOL formart to try when editing\reading file in buffer
+set termguicolors " for 24bit color support
+syntax enable " enable syntax
+colorscheme dracula " colorscheme
+set guifont=Hack\ Nerd\ Font:h13 " font
+set listchars=tab:\·\,extends:>,precedes:< " to use with set list to show special characters
+set list " show invisible chars
+set autoread " re-read a file that was changed outside of vim
+set nobackup " disable backup
+set nowritebackup " disable backup
+set noswapfile " disable swap file
+let mapleader = "-" " leader - to be used with command for all vim
+let maplocalleader = "." " localleader - to be used for command specific to the buffer
+autocmd! GUIEnter * set vb t_vb= " Remove annoying bell sound from MacVim
+set shell=fish " set prefered shell for :terminal
+set foldmarker="{{{ }}}" " set what to use as fold marker
+set foldmethod=marker " set fold method to marker
+set foldlevelstart=20 " decide how fold should be when loading in buffer
+set hidden " change buffer even without saving
+set ignorecase " ignore case sensitivity when searching
+set smartcase " overwrite ignorecase if uppercase letters appear
+set fillchars+=vert:\  " get rid of split separator, dont' line it
+" no line numbers in terminal buffers
+autocmd TerminalOpen * if &buftype == 'terminal' | setlocal nonumber | setlocal norelativenumber | endif
 
-" To get hover working in the terminal we need to set ttymouse. See
-"
-" :help ttymouse
-"
-" for the appropriate setting for your terminal. Note that despite the
-" automated tests using xterm as the terminal, a setting of ttymouse=xterm
-" does not work correctly beyond a certain column number (citation needed)
-" hence we use ttymouse=sgr
-set ttymouse=sgr
+" suggested by the govim plugin
+set ttymouse=xterm2 " terminal type for which mouse command should be recognized
+                    " xterm2 is better for iterm2
 
 " Suggestion: By default, govim populates the quickfix window with diagnostics
 " reported by gopls after a period of inactivity, the time period being
@@ -174,22 +126,67 @@ set signcolumn=yes
 
 filetype indent on
 
-
 " Suggestion: show info for completion candidates in a popup menu
 if has("patch-8.1.1904")
   set completeopt+=popup
   set completepopup=align:menu,border:off,highlight:Pmenu
 endif
+" }}}
 
-autocmd BufRead,BufNewFile *.wiki setlocal nolist
+" Mapping {{{
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+nnoremap <c-c> :NERDTreeToggle<CR>
+nnoremap <c-a> viw  " select current word in normal mode
+nnoremap <leader>ev :vsplit $MYVIMRC<cr> " open vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr> " reload vimrc
+inoremap jk <esc> " behave like esc
+inoremap <esc> <nop> " disable esc, toooooo far away
+nnoremap <Up> <nop>    " training wheels to not use arrows
+nnoremap <Left> <nop>  " training wheels to not use arrows
+nnoremap <Right> <nop> " training wheels to not use arrows
+nnoremap <Down> <nop>  " training wheels to not use arrows
 
-" NerdTree stuff
-let NERDTreeRespectWildIgnore=1
+" Silver searcher mappings
+" Search for the word under cursor
+nnoremap <Leader>s :Ags<Space><C-R>=expand('<cword>')<CR><CR>
+" Search for the visually selected text
+vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR>
+" Run Ags
+nnoremap <Leader>a :Ags<Space>
+" Quit Ags
+nnoremap <Leader><Leader>a :AgsQuit<CR>
 
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+" Move around buffers
+nnoremap ' :bp!<CR><CR>
+nnoremap ì :bn!<CR><CR>
+" Move around tabs
+nnoremap è :tabp<CR><CR>
+nnoremap + :tabn<CR><CR>
+
+" Autocomplete
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-Space>
+" }}}
+
+"
+" Trick for avoiding toggle paste mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+" 
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
 endfunction
+" NerdTree stuff {{{
+let NERDTreeRespectWildIgnore=1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 let g:NERDTreeGitStatusShowIgnored = 1
 call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'NONE')
@@ -206,8 +203,5 @@ call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'NONE')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
 call NERDTreeHighlightFile('go', 'lightblue', 'none', '#338ab3', 'NONE')
-
-
-" Remove annoying bell sound from MacVim
-autocmd! GUIEnter * set vb t_vb=
+" }}}
 
