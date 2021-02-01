@@ -62,11 +62,14 @@ inoremap <silent><expr> <TAB>
 " }}}
 
 " Settings {{{
+" set spell " enable spell checker. To obtain suggestion press z= on the word
+" :setlocal spell spelllang=en " set spell checker  for eng. Use ]s and [s to 
+" move to the next and previous misspelled word
 set scrolloff=7 " Lines to keep above and below curso
 set backspace=indent,eol,start " don't remember
-set wildmenu " Wim command completition expanded
+set wildmenu " Vim command completion expanded
 set laststatus=2 " always show status bar
-set incsearch " while searching show the mattern that matches so far
+set incsearch " while searching show the pattern that matches so far
 set number " show line numbers
 set cursorline " highlight the cursor line
 set showcmd " show cmd in last line
@@ -74,7 +77,7 @@ set hlsearch " highlight search
 set colorcolumn=80 " set column to 80 chars
 let g:airline#extensions#tabline#enabled = 1 " enable airline
 set mouse=a " enable mouse support in case I'm lazy
-set autoindent " autoindent based on current line
+set autoindent " auto indent based on current line
 set expandtab " spaces for tabs
 set tabstop=2 " number of spaces for a tab
 set shiftwidth=2 " indentation when using << >> and ==
@@ -184,6 +187,7 @@ function! XTermPasteBegin()
   return ""
 endfunction
 " NerdTree stuff {{{
+let NERDTreeShowHidden=1" 
 let NERDTreeRespectWildIgnore=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
