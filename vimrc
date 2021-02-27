@@ -11,7 +11,7 @@ Plug 'https://github.com/terryma/vim-multiple-cursors.git'
  
 Plug 'https://github.com/airblade/vim-gitgutter.git'
  
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
  
 " nerdtree
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -26,51 +26,56 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/dracula/vim.git'
 
 " Silver searcher
-Plug 'gabesoft/vim-ags'
+" Plug 'gabesoft/vim-ags'
 
 " Go
 Plug 'govim/govim'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" fzf
+" remember to install fzf, bat for file preview and ag for searching
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+"   Plug 'Shougo/deoplete.nvim'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
 
 " Initialize plugin system
 call plug#end()
 " }}}
 
-" Deoplete {{{
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('omni_patterns', {
-\ 'go': '[^. *\t]\.\w*',
-\})
-" <TAB>: completion.
-function! s:check_back_space() abort 
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#manual_complete()
-" }}}
+" " Deoplete {{{
+" let g:deoplete#enable_at_startup = 1
+" call deoplete#custom#option('omni_patterns', {
+" \ 'go': '[^. *\t]\.\w*',
+" \})
+" " <TAB>: completion.
+" function! s:check_back_space() abort 
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction"}}}
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ deoplete#manual_complete()
+" " }}}
 
 " Settings {{{
 " set spell " enable spell checker. To obtain suggestion press z= on the word
 " :setlocal spell spelllang=en " set spell checker  for eng. Use ]s and [s to 
 " move to the next and previous misspelled word
-set scrolloff=7 " Lines to keep above and below curso
+set scrolloff=10 " Lines to keep above and below curso
 set backspace=indent,eol,start " don't remember
 set wildmenu " Vim command completion expanded
 set laststatus=2 " always show status bar
 set incsearch " while searching show the pattern that matches so far
-set number " show line numbers
+set number relativenumber " show line numbers hybrid mode
 set cursorline " highlight the cursor line
 set showcmd " show cmd in last line
 set hlsearch " highlight search
@@ -87,7 +92,7 @@ set termguicolors " for 24bit color support
 syntax enable " enable syntax
 colorscheme dracula " colorscheme
 set guifont=Hack\ Nerd\ Font:h13 " font
-set listchars=tab:\·\,extends:>,precedes:< " to use with set list to show special characters
+set listchars=tab:\·\ ",extends:>,precedes:< " to use with set list to show special characters
 set list " show invisible chars
 set autoread " re-read a file that was changed outside of vim
 set nobackup " disable backup
@@ -97,10 +102,10 @@ let mapleader = "-" " leader - to be used with command for all vim
 let maplocalleader = "." " localleader - to be used for command specific to the buffer
 autocmd! GUIEnter * set vb t_vb= " Remove annoying bell sound from MacVim
 set shell=fish " set prefered shell for :terminal
-set foldmarker="{{{ }}}" " set what to use as fold marker
+set foldmarker={{{,}}} " set what to use as fold marker
 set foldmethod=marker " set fold method to marker
 set foldlevelstart=20 " decide how fold should be when loading in buffer
-set hidden " change buffer even without saving
+set hidden " do not unload buffer when abandoned. Useful for switching buf without persisting it and keep its history of undos
 set ignorecase " ignore case sensitivity when searching
 set smartcase " overwrite ignorecase if uppercase letters appear
 set fillchars+=vert:\  " get rid of split separator, dont' line it
@@ -141,20 +146,27 @@ nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
+" open fzf Files with Ctrl-p
+nnoremap <C-p> :Files<CR> 
 nnoremap <c-c> :NERDTreeToggle<CR>
-nnoremap <c-a> viw  " select current word in normal mode
-nnoremap <leader>ev :vsplit $MYVIMRC<cr> " open vimrc
-nnoremap <leader>sv :source $MYVIMRC<cr> " reload vimrc
-inoremap jk <esc> " behave like esc
-inoremap <esc> <nop> " disable esc, toooooo far away
-nnoremap <Up> <nop>    " training wheels to not use arrows
-nnoremap <Left> <nop>  " training wheels to not use arrows
-nnoremap <Right> <nop> " training wheels to not use arrows
-nnoremap <Down> <nop>  " training wheels to not use arrows
+" select current word in normal mode
+nnoremap <c-a> viw  
+" open vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr> 
+" reload vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr> 
+" behave like esc
+inoremap jk <esc> 
+" disable esc
+inoremap <esc> <nop> 
+nnoremap <Up> <nop>    
+nnoremap <Left> <nop>  
+nnoremap <Right> <nop> 
+nnoremap <Down> <nop>  
 
 " Silver searcher mappings
 " Search for the word under cursor
-nnoremap <Leader>s :Ags<Space><C-R>=expand('<cword>')<CR><CR>
+nnoremap <Leader>s :Ag<Space><C-R>=expand('<cword>')<CR><CR>
 " Search for the visually selected text
 vnoremap <Leader>s y:Ags<Space><C-R>='"' . escape(@", '"*?()[]{}.') . '"'<CR><CR>
 " Run Ags
@@ -193,19 +205,19 @@ let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
 let g:NERDTreeGitStatusShowIgnored = 1
-call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'NONE')
-call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', 'NONE')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', 'NONE')
-call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'NONE')
-call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'NONE')
-call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
-call NERDTreeHighlightFile('go', 'lightblue', 'none', '#338ab3', 'NONE')
+"call NERDTreeHighlightFile('jade', 'green', 'none', 'green', 'NONE')
+"call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', 'NONE')
+"call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', 'NONE')
+"call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', 'NONE')
+"call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', 'NONE')
+"call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'NONE')
+"call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', 'NONE')
+"call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'NONE')
+"call NERDTreeHighlightFile('go', 'lightblue', 'none', '#338ab3', 'NONE')
 " }}}
 
