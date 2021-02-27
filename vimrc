@@ -156,7 +156,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " reload vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr> 
 " behave like esc
-inoremap jk <esc> 
+inoremap jk <esc>
 " disable esc
 inoremap <esc> <nop> 
 nnoremap <Up> <nop>    
